@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <script>
+        let userName = prompt("Nhập tên của bạn");
+let role = prompt("vai trò");
+let balance = +prompt("Số dư tài khoản thẻ");
+let cardStatus = prompt("trạng thái thẻ");
+let overdueDays = +prompt("Nhập số ngày quá hạn");
+
+switch(role){
+     case"admin":
+        console.log("Chào Admin, bạn có toàn quyền hệ thống");
+        break;
+    case "student":
+        console.log("Chào sinh viên, bạn có thể mượn sách");
+        break;
+    case "guest":
+        console.log("Chào quý khách, bạn có thể học tại chỗ");
+        break;
+    default:
+        console.log("lỗi: vai trò không hợp lệ"); 
+        break;
+}
+
+let fine = 0;
+let returnStatus = "";
+
+if (overdueDays <= 0) {
+    returnStatus = "Cảm ơn bạn đã trả đúng hạn";
+} else if (overdueDays <= 5) {
+    fine = overdueDays * 5000;
+    returnStatus = `Quá hạn ${overdueDays} ngày`;
+} else if (overdueDays <= 10) {
+    fine = overdueDays * 10000;
+    returnStatus = `Quá hạn ${overdueDays} ngày`;
+} else {
+    fine = 200000;
+    returnStatus = `Quá hạn ${overdueDays} ngày - TÀI KHOẢN BỊ KHÓA`;
+}
+
+console.log(`
+--- HỆ THỐNG MƯỢN TRẢ ---
+
+Người dùng: ${name}
+
+Quyền hạn: ${roleMessage}
+
+Kết quả mượn: ${borrowResult}
+${reason ? "Lý do: " + reason : ""}
+
+Tình trạng trả sách: ${returnStatus}
+
+Tiền phạt: ${fine} VNĐ
+`);
+     </script>
+</body>
+</html>
