@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let totalBooks = 0;
+    let lostCount = 0;
+    let outOfStockCount = 0;
+    let normalStockCount = 0;
+    let highStockCount = 0;
+
+    let choice;
+
+    do {
+        choice = prompt("Tiếp tục kiểm kê sách tiếp theo? (có/không)");
+
+        if (choice === "không") {
+            break;
+        }
+
+        if (choice !== "có") {
+            console.log("Vui lòng nhập 'có' hoặc 'không'");
+            continue;
+        }
+        totalBooks++;
+        let bookId;
+        do {
+            bookId = prompt("Nhập mã sách (không được để trống)");
+        } while (!bookId);
+
+        let bookName = prompt("Tên sách");
+
+        let quantity;
+        do {
+            quantity = +prompt("Số lượng thực tế trong kho (>=0)");
+        } while (quantity < 0 || !Number.isInteger(quantity));
+
+        let status;
+        do {
+            status = +prompt(
+                "Tình trạng sách:\n1 - Bình thường\n2 - Mất"
+            );
+        } while (status !== 1 && status !== 2);
+        if (status === 2) {
+            console.log(" Sách mất");
+            lostCount++;
+        } else {
+            if (quantity === 0) {
+                console.log(" Sách hết hàng");
+                outOfStockCount++;
+            } else if (quantity >= 10) {
+                console.log(" Sách tồn kho nhiều");
+                highStockCount++;
+            } else {
+                console.log(" Sách tồn kho bình thường");
+                normalStockCount++;
+            }
+        }
+
+    } while (true);
+    console.log("===== BÁO CÁO KIỂM KÊ =====");
+    console.log("Tổng số sách đã kiểm kê: " + totalBooks);
+    console.log("Số sách mất: " + lostCount);
+    console.log("Số sách hết hàng: " + outOfStockCount);
+    console.log("Sách tồn kho bình thường: " + normalStockCount);
+    console.log("Sách tồn kho nhiều: " + highStockCount);
+</script>
+</body>
+</html>

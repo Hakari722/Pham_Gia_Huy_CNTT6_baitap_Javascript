@@ -7,26 +7,26 @@
 </head>
 <body>
     <script>
-        let number = 1 
-        switch (number) {
-            case 1:
-                console.log("số là 1");
-                break;
-            case 2:
-                console.log("số là 2");
-                break;
-            case 3:
-                console.log("số là 3");
-                break;
-            default:
-                console.log("số không phải là 1 và 2");
-                break;
-        }
-        if (userName && (role == "student" || role =="admin") && (balance > 0 && cardStatus == true)){
-            console.log("ĐƯỢC PHÉP MƯỢN SÁCH");
-        }else {
-            console.log("YÊU CẦU BỊ TỪ CHỐI");
-        }
+let bookCount;
+while (true) {
+    bookCount = +prompt("Nhập số lượng sách trong thư viện:");
+
+    if (bookCount >= 0) {
+        break;
+    }
+    alert("Vui lòng nhập số hợp lệ!");
+}
+let message = "";
+if (bookCount < 10) {
+    message = "Thư viện có ít sách";
+} else if (bookCount <= 20) {
+    message = "Thư viện có số lượng sách vừa đủ";
+} else {
+    message = "Thư viện có nhiều sách";
+}
+console.log("Số lượng sách:", bookCount);
+console.log("Thông báo:", message);
+
     </script>
 </body>
 </html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+let bookName = prompt("Nhập tên sách:");
+let category = prompt("Nhập thể loại sách:");
+let status = prompt("Tình trạng sách (co san / da muon):");
+let bookCategory = category ? category.trim().toLowerCase() : "";
+let bookStatus = status ? status.trim().toLowerCase() : "";
+let message = "";
+if (bookCategory === "khoa học" || bookCategory === "lịch sử") {
+    if (bookStatus === "co san") {
+        message = "Sách này có sẵn trong thư viện";
+    } else {
+        message = "Sách đã được mượn";
+    }
+} else if (bookCategory === "văn học" || bookCategory === "truyện") {
+    message = "Sách này có thể đọc giải trí";
+} else {
+    message = "Thể loại sách chưa được hỗ trợ";
+}
+console.log("Tên sách:", bookName);
+console.log("Thể loại:", category);
+console.log("Thông báo:", message);
+
+    </script>
+</body>
+</html>

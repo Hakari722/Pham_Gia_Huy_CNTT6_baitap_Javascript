@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library System</title>
+</head>
+<body>
+<script>
+    let count = 0;
+    let loggedIn = false;
+
+    while (count < 3) {
+        let password = prompt("Nhập mật khẩu");
+
+        if (password === "admin123") {
+            console.log("Nhập mật khẩu thành công");
+            loggedIn = true;
+            break;
+        } else {
+            console.log(`Sai mật khẩu lần ${count + 1}`);
+            count++;
+        }
+    }
+
+    if (!loggedIn) {
+        console.log("Hệ thống đã bị khóa");
+    } else {
+        let choice;
+        do {
+            choice = +prompt(`
+Chọn chức năng
+1 - Nhập lô sách mới
+2 - Vẽ sơ đồ kệ sách
+3 - Thoát
+            `);
+
+            switch (choice) {
+                case 1:
+                    let book = +prompt("Bạn muốn nhập bao nhiêu sách?");
+                    let total = 0;
+
+                    for (let i = 1; i <= book; i++) {
+                        let value = +prompt("Nhập giá tiền cuốn sách " + i);
+
+                        if (value <= 0) {
+                            console.log("Giá không hợp lệ, bỏ qua!");
+                            continue;
+                        }
+
+                        total += value;
+                    }
+
+                    console.log("Tổng giá trị nhập kho là: " + total);
+                    break;
+                case 2:
+                    for (let area = 1; area <= 3; area++) {
+                        for (let shelf = 1; shelf <= 5; shelf++) {
+
+                            if (area === 2 && shelf === 3) {
+                                console.log("Khu vực 2 - Kệ 3 (Đang sửa chữa)");
+                                continue;
+                            }
+
+                            console.log(`Khu vực ${area} - Kệ ${shelf}`);
+                        }
+                    }
+                    break;
+                case 3:
+                    console.log("Thoát chương trình");
+                    break;
+
+                default:
+                    console.log("Lựa chọn không hợp lệ");
+            }
+
+        } while (choice !== 3);
+    }
+</script>
+</body>
+</html>

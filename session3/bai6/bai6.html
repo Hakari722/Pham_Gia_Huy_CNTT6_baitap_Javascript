@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let totalFeedback = 0;
+    let seriousCount = 0;
+    let mediumCount = 0;
+    let lightCount = 0;
+    let suggestionCount = 0;
+    let positiveCount = 0;
+
+    let choice;
+
+    do {
+        choice = prompt("Co khieu nai / phan hoi moi tu ban doc khong? (co/khong)");
+
+        if (choice === "khong") {
+            break;
+        }
+
+        if (choice !== "co") {
+            console.log("Lua chon khong hop le");
+            continue;
+        }
+
+        totalFeedback++;
+
+        let readerName = prompt("Ten ban doc");
+        let readerId = prompt("Ma ban doc");
+
+        let type;
+        do {
+            type = +prompt(
+                "Loai phan hoi:\n" +
+                "1 - Khieu nai\n" +
+                "2 - De xuat cai thien\n" +
+                "3 - Phan hoi tich cuc"
+            );
+        } while (type !== 1 && type !== 2 && type !== 3);
+
+        let level = 0;
+        if (type === 1) {
+            do {
+                level = +prompt(
+                    "Muc do nghiem trong:\n" +
+                    "1 - Nhe\n" +
+                    "2 - Trung binh\n" +
+                    "3 - Nghiem trong"
+                );
+            } while (level !== 1 && level !== 2 && level !== 3);
+        }
+
+        let content = prompt("Noi dung phan hoi");
+
+        if (type === 1 && level === 3) {
+            console.log("Chuyen ngay lanh dao xu ly");
+            seriousCount++;
+        } 
+        else if (type === 1 && level === 2) {
+            console.log("Ghi nhan xu ly trong ngay");
+            mediumCount++;
+        } 
+        else if (type === 1 && level === 1) {
+            console.log("Xu ly ngay tai quay");
+            lightCount++;
+        } 
+        else if (type === 2) {
+            console.log("Ghi nhan vao so y kien");
+            suggestionCount++;
+        } 
+        else if (type === 3) {
+            console.log("Cam on ban doc");
+            positiveCount++;
+        }
+
+    } while (true);
+
+    console.log("Tong so phan hoi: " + totalFeedback);
+    console.log("Khieu nai nghiem trong: " + seriousCount);
+    console.log("Khieu nai trung binh: " + mediumCount);
+    console.log("Khieu nai nhe: " + lightCount);
+    console.log("De xuat cai thien: " + suggestionCount);
+    console.log("Phan hoi tich cuc: " + positiveCount);
+    </script>
+</body>
+</html>

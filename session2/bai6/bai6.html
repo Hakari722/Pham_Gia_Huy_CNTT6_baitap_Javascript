@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+let bookName = prompt("Nhập tên sách:");
+let borrowerName = prompt("Nhập tên người mượn:");
+let status = prompt("Nhập tình trạng sách (co san / da muon / khong co san):");
+let borrowDays = +prompt("Nhập số ngày mượn:");
+let hasCard = prompt("Bạn có thẻ thư viện không? (true / false)");
+let bookStatus = status ? status.trim().toLowerCase() : "";
+let isHaveCard = hasCard === "true";
+let message = "";
+if (bookStatus === "co san" && isHaveCard) {
+    message = "Chúc mừng, bạn có thể mượn sách này";
+} 
+else if (bookStatus === "da muon" && borrowDays < 30) {
+    if (isHaveCard) {
+        message = "Sách đang được mượn, vui lòng đợi đến khi trả lại";
+    } else {
+        message = "Bạn không thể mượn sách nếu không có thẻ thư viện";
+    }
+} 
+else if (bookStatus === "khong co san") {
+    message = "Sách này hiện tại không có sẵn trong thư viện, bạn có thể đăng ký mượn sau";
+} 
+else {
+    message = "Thông tin không hợp lệ";
+}
+console.log("Tên sách:", bookName);
+console.log("Người mượn:", borrowerName);
+console.log("Kết quả:", message);
+
+    </script>
+</body>
+</html>
