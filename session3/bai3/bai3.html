@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let successCount = 0;
+    let failCount = 0;
+    while (true) {
+        let answer = prompt("Có yêu cầu gia hạn không? (có/không)");
+
+        if (answer === "không") {
+            break; 
+        }
+
+        if (answer !== "có") {
+            console.log("Vui lòng nhập 'có' hoặc 'không'");
+            continue;
+        }
+        let readerName = prompt("Tên bạn đọc");
+        let bookName = prompt("Tên sách");
+
+        let borrowedDays;
+        let extendDays;
+        do {
+            borrowedDays = +prompt("Số ngày đã mượn hiện tại (>=1)");
+            if (borrowedDays < 1 || !Number.isInteger(borrowedDays)) {
+                console.log("Số ngày đã mượn không hợp lệ, nhập lại");
+            }
+        } while (borrowedDays < 1 || !Number.isInteger(borrowedDays));
+        do {
+            extendDays = +prompt("Số ngày muốn gia hạn thêm (>=1)");
+            if (extendDays < 1 || !Number.isInteger(extendDays)) {
+                console.log("Số ngày gia hạn không hợp lệ, nhập lại");
+            }
+        } while (extendDays < 1 || !Number.isInteger(extendDays));
+        let totalDays = borrowedDays + extendDays;
+        if (totalDays > 80) {
+            console.log("Không được gia hạn: Tổng thời gian vượt quá 80 ngày tối đa");
+            failCount++;
+        } else if (borrowedDays > 45) {
+            console.log("Không được gia hạn: Đã mượn quá lâu (>45 ngày)");
+            failCount++;
+        } else {
+            console.log("Gia hạn thành công");
+            successCount++;
+        }
+    }
+    console.log("===== THỐNG KÊ =====");
+    console.log("Số lần gia hạn thành công: " + successCount);
+    console.log("Số lần gia hạn không thành công: " + failCount);
+</script>
+</body>
+</html>

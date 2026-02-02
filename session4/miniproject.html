@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+const ACCOUNT = "admin";
+const PASSWORD = "12345";
+let attempts = 0;
+let isLogin = false;
+while (attempts < 3) {
+    let user = prompt("Nhập tài khoản:");
+    let pass = prompt("Nhập mật khẩu:");
+
+    if (user !== ACCOUNT) {
+        alert("Sai Tài khoản!");
+    } else if (pass !== PASSWORD) {
+        alert("Sai Mật khẩu!");
+    } else {
+        alert("Đăng nhập thành công!");
+        isLogin = true;
+        break;
+    }
+    attempts++;
+}
+
+if (!isLogin) {
+    alert("Tài khoản đã bị khóa");
+} else {
+
+    let choice;
+    do {
+        choice = prompt(
+        `===== MENU =====
+        1. Phân loại mã số sách
+        2. Thiết kế sơ đồ kho sách
+        3. Dự toán phí bảo trì
+        4. Tìm mã số sách may mắn
+        5. Thoát
+        Nhập lựa chọn (1-5):`
+        );      
+        if (choice === "1") {
+            let total = 0, even = 0, odd = 0;
+            while (true) {
+                let num = Number(prompt("Nhập mã số sách (0 để dừng):"));
+                if (num === 0) break;
+                total++;
+                if (num % 2 === 0) even++;
+                else odd++;
+            }
+            alert(
+            `Tổng số mã sách: ${total}
+            Số chẵn (Sách khoa học): ${even}
+            Số lẻ (Sách nghệ thuật): ${odd}`
+            );
+
+        } else if (choice === "2") {            
+            let rows = Number(prompt("Nhập số hàng:"));
+            let cols = Number(prompt("Nhập số cột:"));
+            let result = "";
+
+            for (let i = 1; i <= rows; i++) {
+                for (let j = 1; j <= cols; j++) {
+                    if (i === j) {
+                        result += `[${i}-${j}] (Kệ ưu tiên)\n`;
+                    } else {
+                        result += `[${i}-${j}]\n`;
+                    }
+                }
+            }
+            alert(result);
+
+        } else if (choice === "3") {
+            let soSach = Number(prompt("Nhập số lượng sách:"));
+            let phi = Number(prompt("Nhập phí bảo trì 1 cuốn (đ):"));
+            let nam = Number(prompt("Nhập số năm dự toán:"));
+
+            let result = "";
+            let currentFee = phi;
+
+            for (let i = 1; i <= nam; i++) {
+                result += `Năm ${i}: ${(soSach * currentFee).toFixed(0)} đ\n`;
+                currentFee *= 1.1;
+            }
+            alert(result);
+
+        } else if (choice === "4") {
+            let N = Number(prompt("Nhập N:"));
+            let list = "";
+            let count = 0;
+
+            for (let i = 1; i <= N; i++) {
+                if (i % 3 === 0 && i % 5 !== 0) {
+                    list += i + " ";
+                    count++;
+                }
+            }
+            alert(
+            `Các mã sách may mắn:${list}
+            Tổng số: ${count}`
+            );
+
+        } else if (choice === "5") {
+            alert("Hệ thống đang đăng xuất...");
+        } else {
+            alert("Lựa chọn không hợp lệ!");
+        }
+
+    } while (choice !== "5");
+}
+
+    </script>
+</body>
+</html>
