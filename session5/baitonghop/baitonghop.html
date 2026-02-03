@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let choice;
+        let books = ["Nha Gia Kim", "Dac Nhan Tam", "Tuan Lam Viec 4 Gio"];
+        choice = +prompt(
+            `Nhập lựa chọn
+            --- THƯ VIỆN KHOA HỌC ---
+
+            1. Xem danh sách
+            2. Nhập sách mới
+            3. Mượn sách (Xóa)
+            4. Sửa tên sách
+            5. Sắp xếp kệ           
+            0. Thoát
+        
+        `);
+        switch (choice){
+            case 1:
+                for(const index in books){
+                    console.log(`${index +1 }. ${books[index]}`);
+                }
+                break;
+            case 2:
+                let newBook = prompt ("Nhập tên sách mới");
+                books.push(newBook);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 0:
+                console.log("chương trình kết thúc");
+                break;
+            default:
+                console.log("lựa chọn khộng hợp lệ vui lòng nhập lại!");
+        }
+    </script>
+</body>
+</html>
