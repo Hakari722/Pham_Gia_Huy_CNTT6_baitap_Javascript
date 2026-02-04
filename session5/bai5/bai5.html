@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let bookId = [];
+    let bookName = [];
+    let bookCategory = [];
+    let inventoryQuantity = [];
+
+    let n = +prompt("Có bao nhiêu loại sách cần kiểm tra hôm nay?");
+
+    for (let i = 0; i < n; i++) {
+        let id;
+        do {
+            id = prompt(`Nhập mã sách thứ ${i + 1}:`);
+        } while (!id);
+
+        let name;
+        do {
+            name = prompt(`Nhập tên sách thứ ${i + 1}:`);
+        } while (!name);
+
+        let category;
+        do {
+            category = prompt(`Nhập các thể loại của sách thứ ${i + 1}:`);
+        } while (!category);
+
+        let quantity;
+        do {
+            quantity = +prompt(`Nhập số lượng tồn kho của sách thứ ${i + 1}:`);
+        } while (quantity < 0);
+
+        bookId.push(id);
+        bookName.push(name);
+        bookCategory.push(category);
+        inventoryQuantity.push(quantity);
+    }
+
+    console.log("Tổng số sách thuộc thể loại Lập trình:", bookId.length);
+
+    console.log("Danh sách sách thuộc các thể loại JavaScript và Web:");
+    for (let i = 0; i < bookId.length; i++) {
+        if (bookCategory[i].includes("JavaScript") || bookCategory[i].includes("Web")) {
+            console.log(bookId[i]);
+        }
+    }
+
+    let minIndex = 0;
+    for (let i = 1; i < inventoryQuantity.length; i++) {
+        if (inventoryQuantity[i] < inventoryQuantity[minIndex]) {
+            minIndex = i;
+        }
+    }
+
+    console.log("Sách có số lượng tồn kho thấp nhất:");
+    console.log(`Mã sách: ${bookId[minIndex]}, Tên sách: ${bookName[minIndex]}, Tồn kho: ${inventoryQuantity[minIndex]}`);
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const ACCOUNT = { user: "admin", pass: "12345" };
+let loginAttempts = 0;
+let isAuthenticated = false;
+let libraries = ["Toán", "Văn", "Anh"];
+
+while (loginAttempts < 3) {
+    let userIn = prompt("Nhập tài khoản:");
+    let passIn = prompt("Nhập mật khẩu:");
+
+    if (userIn === ACCOUNT.user && passIn === ACCOUNT.pass) {
+        isAuthenticated = true;
+        break;
+    } else {
+        loginAttempts++;
+        alert(`Sai tài khoản hoặc mật khẩu. Còn ${3 - loginAttempts} lần thử.`);
+    }
+}
+
+if (!isAuthenticated) {
+    alert("Tài khoản đã bị khóa");
+} else {
+    let loop = true;
+    while (loop) {
+        let menu = `--- MENU ---
+1. Nhập thêm lô sách mới
+2. Hiển thị danh sách sách
+3. Tìm kiếm sách
+4. Cập nhật tên sách
+5. Đảo ngược thứ tự kệ sách
+6. Nhập kho từ nguồn khác
+7. Thoát chương trình`;
+
+        let choice = prompt(menu);
+
+        switch (choice) {
+            case "1":
+                let input = prompt("Nhập các tên sách (cách nhau bởi dấu phẩy):");
+                if (input) {
+                    let books = input.split(",").map(item => item.trim());
+                    libraries = libraries.concat(books);
+                    alert(`Đã thêm ${books.length} cuốn sách.`);
+                }
+                break;
+            case "2":
+                let list = "";
+                libraries.forEach((book, i) => {
+                    list += `${i + 1}. ${book}\n`;
+                });
+                console.log(list);
+                break;
+            case "3":
+                let search = prompt("Nhập tên sách cần tìm:");
+                let idx = libraries.indexOf(search);
+                alert(idx !== -1 ? `Tìm thấy tại vị trí ${idx}` : "Không tìm thấy");
+                break;
+            case "4":
+                let oldBook = prompt("Nhập tên sách cần sửa:");
+                let updateIdx = libraries.indexOf(oldBook);
+                if (updateIdx !== -1) {
+                    libraries[updateIdx] = prompt("Nhập tên mới:");
+                    alert("Cập nhật thành công");
+                } else {
+                    alert("Không tồn tại");
+                }
+                break;
+            case "5":
+                libraries.reverse();
+                let revList = "";
+                libraries.forEach((book, i) => {
+                    revList += `${i}. ${book}\n`;
+                });
+                console.log(revList);
+                break;
+            case "6":
+                libraries = libraries.concat(["Sách Kỹ Năng", "Truyện Tranh"]);
+                alert("Đã gộp kho sách thành công");
+                break;
+            case "7":
+                alert("Hẹn gặp lại!");
+                loop = false;
+                break;
+        }
+    }
+}
+    </script>
+</body>
+</html>

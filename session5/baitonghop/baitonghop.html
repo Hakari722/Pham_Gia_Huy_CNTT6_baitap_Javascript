@@ -7,42 +7,75 @@
 </head>
 <body>
     <script>
-        let choice;
-        let books = ["Nha Gia Kim", "Dac Nhan Tam", "Tuan Lam Viec 4 Gio"];
-        choice = +prompt(
-            `Nhập lựa chọn
-            --- THƯ VIỆN KHOA HỌC ---
+     let books = ["Nha Gia Kim", "Dac Nhan Tam", "Tuan Lam Viec 4 Gio"];
+    let choice;
 
-            1. Xem danh sách
-            2. Nhập sách mới
-            3. Mượn sách (Xóa)
-            4. Sửa tên sách
-            5. Sắp xếp kệ           
-            0. Thoát
-        
-        `);
-        switch (choice){
+    do {
+        choice = +prompt(
+`--- THƯ VIỆN KHOA HỌC ---
+1. Xem danh sách
+2. Nhập sách mới
+3. Mượn sách (Xóa)
+4. Sửa tên sách
+5. Sắp xếp kệ
+0. Thoát
+
+Bạn chọn:`);
+
+        switch (choice) {
             case 1:
-                for(const index in books){
-                    console.log(`${index +1 }. ${books[index]}`);
+                console.log(`Danh sách hiện tại (${books.length} cuốn):`);
+                for (let i = 0; i < books.length; i++) {
+                    console.log(`${i + 1}. ${books[i]}`);
                 }
                 break;
+
             case 2:
-                let newBook = prompt ("Nhập tên sách mới");
+                let newBook = prompt("Nhập tên sách mới:");
                 books.push(newBook);
+                console.log("Đã thêm thành công!");
                 break;
+
             case 3:
+                let borrowBook = prompt("Nhập tên sách muốn mượn:");
+                let index = books.indexOf(borrowBook);
+                if (index === -1) {
+                    console.log(`Không tìm thấy sách ${borrowBook}!`);
+                } else {
+                    books.splice(index, 1);
+                    console.log(`Đã cho mượn cuốn '${borrowBook}'.`);
+                }
                 break;
+
             case 4:
+                let oldBook = prompt("Nhập tên sách cần sửa:");
+                let idx = books.indexOf(oldBook);
+                if (idx === -1) {
+                    console.log("Không tìm thấy sách cần sửa!");
+                } else {
+                    let newName = prompt("Nhập tên sách mới:");
+                    books[idx] = newName;
+                    console.log("Đã cập nhật tên sách!");
+                }
                 break;
+
             case 5:
+                books.sort();
+                console.log("Danh sách sau khi sắp xếp:");
+                for (let i = 0; i < books.length; i++) {
+                    console.log(`${i + 1}. ${books[i]}`);
+                }
                 break;
+
             case 0:
-                console.log("chương trình kết thúc");
+                console.log("Chương trình kết thúc!");
                 break;
+
             default:
-                console.log("lựa chọn khộng hợp lệ vui lòng nhập lại!");
+                console.log("Lựa chọn không hợp lệ!");
         }
-    </script>
+
+    } while (choice !== 0);
+</script>
 </body>
 </html>

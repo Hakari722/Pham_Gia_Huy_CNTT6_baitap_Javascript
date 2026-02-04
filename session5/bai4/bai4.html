@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let booksId = [];
+    let booksName = [];
+    let bookStatus = [];
+
+    let n = +prompt("Có bao nhiêu cuốn sách cần kiểm tra tình trạng hôm nay?");
+
+    for (let i = 0; i < n; i++) {
+        let id;
+        do {
+            id = prompt(`Nhập mã sách thứ ${i + 1}:`);
+        } while (!id);
+
+        let name;
+        do {
+            name = prompt(`Nhập tên sách thứ ${i + 1}:`);
+        } while (!name);
+
+        let statusChoice;
+        do {
+            statusChoice = +prompt(
+                `Nhập tình trạng ban đầu (1-3):
+1. Hỏng nhẹ
+2. Hỏng nặng
+3. Cần sửa gấp`
+            );
+        } while (statusChoice < 1 || statusChoice > 3);
+
+        let status;
+        if (statusChoice === 1) status = "Hỏng nhẹ";
+        if (statusChoice === 2) status = "Hỏng nặng";
+        if (statusChoice === 3) status = "Cần sửa gấp";
+
+        booksId.push(id);
+        booksName.push(name);
+        bookStatus.push(status);
+    }
+
+    console.log("Danh sách sách ban đầu:");
+    for (let i = 0; i < booksId.length; i++) {
+        console.log(`${i + 1}. ${booksId[i]} - ${booksName[i]} - ${bookStatus[i]}`);
+    }
+
+    let choice;
+    do {
+        choice = +prompt(
+`Bạn muốn làm gì?
+1. Sửa tình trạng một cuốn sách
+2. Loại bỏ (xóa) một cuốn sách
+0. Kết thúc và in báo cáo cuối`
+        );
+
+        if (choice === 1) {
+            let idEdit = prompt("Nhập mã sách cần sửa:");
+            let found = -1;
+
+            for (let i = 0; i < booksId.length; i++) {
+                if (booksId[i] === idEdit) {
+                    found = i;
+                    break;
+                }
+            }
+
+            if (found !== -1) {
+                let newStatusChoice;
+                do {
+                    newStatusChoice = +prompt(
+                        `Nhập tình trạng mới (1-5):
+1. Hỏng nhẹ
+2. Hỏng nặng
+3. Cần sửa gấp
+4. Đã sửa xong
+5. Loại bỏ`
+                    );
+                } while (newStatusChoice < 1 || newStatusChoice > 5);
+
+                if (newStatusChoice === 1) bookStatus[found] = "Hỏng nhẹ";
+                if (newStatusChoice === 2) bookStatus[found] = "Hỏng nặng";
+                if (newStatusChoice === 3) bookStatus[found] = "Cần sửa gấp";
+                if (newStatusChoice === 4) bookStatus[found] = "Đã sửa xong";
+                if (newStatusChoice === 5) bookStatus[found] = "Loại bỏ";
+            }
+        }
+
+        if (choice === 2) {
+            let idDelete = prompt("Nhập mã sách cần xóa:");
+            let index = -1;
+
+            for (let i = 0; i < booksId.length; i++) {
+                if (booksId[i] === idDelete) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index !== -1) {
+                booksId.splice(index, 1);
+                booksName.splice(index, 1);
+                bookStatus.splice(index, 1);
+            }
+        }
+
+        if (choice !== 0) {
+            console.log("Danh sách hiện tại:");
+            for (let i = 0; i < booksId.length; i++) {
+                console.log(`${i + 1}. ${booksId[i]} - ${booksName[i]} - ${bookStatus[i]}`);
+            }
+        }
+
+    } while (choice !== 0);
+
+    let repairedCount = 0;
+    let removedCount = 0;
+
+    for (let i = 0; i < bookStatus.length; i++) {
+        if (bookStatus[i] === "Đã sửa xong") repairedCount++;
+        if (bookStatus[i] === "Loại bỏ") removedCount++;
+    }
+
+    console.log("BÁO CÁO CUỐI NGÀY:");
+    console.log("Tổng số sách còn lại:", booksId.length);
+    console.log("Số sách đã sửa xong:", repairedCount);
+    console.log("Số sách loại bỏ:", removedCount);
+
+    if (booksId.length > 0) {
+        console.log("Danh sách sách còn lại:");
+        for (let i = 0; i < booksId.length; i++) {
+            console.log(`${i + 1}. ${booksId[i]} - ${booksName[i]} - ${bookStatus[i]}`);
+        }
+    }
+</script>
+</body>
+</html>
