@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+let playerIds = [];
+let playerPositions = [];
+
+let positionsMap = {
+    1: "Thủ môn",
+    2: "Hậu vệ",
+    3: "Tiền vệ",
+    4: "Tiền đạo"
+};
+
+let n = +prompt("Có bao nhiêu cầu thủ cần nhập vào đội bóng?");
+
+for (let i = 0; i < n; i++) {
+    let id;
+    while (true) {
+        id = prompt(`Nhập cầu thủ ${i + 1}:\nMã cầu thủ:`);
+        let isDuplicate = false;
+        for (let j = 0; j < playerIds.length; j++) {
+            if (playerIds[j] === id) {
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (!isDuplicate) break;
+        alert("Mã cầu thủ đã tồn tại, vui lòng nhập lại!");
+    }
+
+    let posChoice;
+    do {
+        posChoice = +prompt("Vị trí (1: Thủ môn, 2: Hậu vệ, 3: Tiền vệ, 4: Tiền đạo):");
+    } while (!positionsMap[posChoice]);
+
+    playerIds.push(id);
+    playerPositions.push(positionsMap[posChoice]);
+}
+
+function printTeamRoster() {
+    console.log(`Đội bóng hiện tại (${playerIds.length} cầu thủ):`);
+    for (let i = 0; i < playerIds.length; i++) {
+        console.log(`${i + 1}. ${playerIds[i]} - ${playerPositions[i]}`);
+    }
+}
+
+function findPlayersByPosition(positionName) {
+    let indices = [];
+    for (let i = 0; i < playerPositions.length; i++) {
+        if (playerPositions[i] === positionName) {
+            indices.push(i);
+        }
+    }
+    return indices;
+}
+
+printTeamRoster();
+
+let searchPos = +prompt("Nhập vị trí cầu thủ muốn đếm số lượng (1: Thủ môn, 2: Hậu vệ, 3: Tiền vệ, 4: Tiền đạo):");
+let searchPosName = positionsMap[searchPos];
+let resultIndices = findPlayersByPosition(searchPosName);
+
+console.log(`Số cầu thủ ở vị trí ${searchPosName}: ${resultIndices.length}`);
+console.log(`Các chỉ số cầu thủ ở vị trí ${searchPosName}: ${resultIndices.join(", ")}`);
+    </script>
+</body>
+</html>

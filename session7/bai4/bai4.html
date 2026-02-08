@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let players = [
+    "P001-Nguyễn Văn A-Thủ môn",
+    "P002-Trần Thị B-Hậu vệ",
+    "P003-Lê Văn C-Hậu vệ",
+    "P004-Phạm Văn D-Tiền vệ",
+    "P005-Hoàng Thị E-Tiền đạo",
+    "P006-Vũ Minh F-Tiền đạo",
+    "P007-Đặng Văn G-Thủ môn"
+];
+
+function printTeamRoster() {
+    players.forEach((player, index) => {
+        let parts = player.split("-");
+        console.log(`${index + 1} ${parts[0]} | ${parts[1]} | ${parts[2]}`);
+    });
+}
+
+function countPlayerByPostion(playersList) {
+    let counts = {};
+    playersList.forEach(player => {
+        let position = player.split("-")[2];
+        counts[position] = (counts[position] || 0) + 1;
+    });
+    return counts;
+}
+
+function hasGoalkeeper() {
+    return players.some(player => player.split("-")[2] === "Thủ môn");
+}
+
+printTeamRoster();
+console.log(countPlayerByPostion(players));
+console.log(hasGoalkeeper());
+    </script>
+</body>
+</html>

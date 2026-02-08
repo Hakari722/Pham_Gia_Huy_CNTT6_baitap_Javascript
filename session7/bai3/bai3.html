@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+let players = [];
+function getPositionName(choice) {
+    switch (choice) {
+        case '1': return "Thủ môn";
+        case '2': return "Hậu vệ";
+        case '3': return "Tiền vệ";
+        case '4': return "Tiền đạo";
+        default: return "";
+    }
+}
+
+let count = parseInt(prompt("Có bao nhiêu cầu thủ cần nhập vào đội bóng?"));
+
+for (let i = 0; i < count; i++) {
+    let id;
+    while (true) {
+        id = prompt(`Nhập mã cầu thủ thứ ${i + 1}:`).trim();
+        let isDuplicate = false;
+        for (let p of players) {
+            if (p.split("-")[0] === id) {
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (id !== "" && !isDuplicate) break;
+        alert("Mã không hợp lệ hoặc bị trùng!");
+    }
+
+    let name;
+    while (true) {
+        name = prompt("Nhập tên cầu thủ:").trim();
+        if (name !== "") break;
+    }
+
+    let posChoice;
+    while (true) {
+        posChoice = prompt("Chọn vị trí (1=Thủ môn, 2=Hậu vệ, 3=Tiền vệ, 4=Tiền đạo):");
+        if (['1', '2', '3', '4'].includes(posChoice)) break;
+    }
+    
+    let position = getPositionName(posChoice);
+    players.push(`${id}-${name}-${position}`);
+}
+
+function printTeamRoster() {
+    players.forEach((player, index) => {
+        let parts = player.split("-");
+        console.log(`${index + 1}. Mã: ${parts[0]} - Tên: ${parts[1]} - Vị trí: ${parts[2]}`);
+    });
+}
+
+function pushPlayer(id, name, position) {
+    players.push(`${id}-${name}-${position}`);
+}
+
+printTeamRoster();
+    </script>
+</body>
+</html>
