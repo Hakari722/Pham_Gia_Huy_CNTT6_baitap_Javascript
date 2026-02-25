@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    const players = [
+    "Messi - Forward",
+    "Ronaldo - Forward",
+    "Neymar - Forward",
+    "De Bruyne - Midfielder",
+    "Kante - Midfielder",
+    "Van Dijk - Defender",
+    "Alisson - Goalkeeper"
+];
+
+function displayPlayers(arr) {
+    arr.forEach(item => {
+        console.log(item);
+    });
+}
+function getUpperNames(arr) {
+return arr.map(item => item.toUpperCase());
+}
+function filterPlayersByPosition(position, arr) {
+return arr.filter(item => item.includes(position));
+}
+console.log("--- Danh sách cầu thủ ---");
+displayPlayers(players);
+console.log("--- Danh sách in hoa ---");
+console.log(getUpperNames(players));
+console.log("--- Lọc Midfielder ---");
+console.log(filterPlayersByPosition("Midfielder", players));
+
+
+    </script>
+</body>
+</html>

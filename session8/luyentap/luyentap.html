@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    const squad = [
+        ["Nguyen Van A", 10, "FW"],
+        ["Tran Van B", 5, "MF"],
+        ["Le Van C", 2, "DF"],
+        ["Pham Van D", 12, "FW"],
+        ["Hoang Van E", 0, "GK"],
+        ["Dang Van F", 7, "MF"]
+    ];
+
+    let choice;
+
+    do {
+        choice = prompt(`=== FOOTBALL ANALYTICS MENU ===
+1. Xem danh sách
+2. Tìm kiếm
+3. Lọc theo vị trí
+4. Tổng bàn thắng
+5. Kiểm tra hiệu suất
+0. Thoát
+
+Nhập lựa chọn của bạn:`);
+
+        switch (choice) {
+            case "1": 
+                console.log("--- DANH SÁCH CẦU THỦ ---");
+                squad.forEach(player => {
+                    console.log(`${player[0]} (${player[2]}): ${player[1]} bàn thắng`);
+                });
+                break;
+
+            case "2": 
+                let searchName = prompt("Nhập tên cầu thủ cần tìm:");
+                let found = squad.find(p => p[0].toLowerCase() === searchName.toLowerCase());
+                if (found) {
+                    console.log(`=> Kết quả: ${found[0]} | Vị trí: ${found[2]} | Bàn thắng: ${found[1]}`);
+                } else {
+                    console.log("=> Lỗi: Không tìm thấy cầu thủ!");
+                }
+                break;
+
+            case "3": 
+                let pos = prompt("Nhập vị trí muốn lọc (FW/MF/DF/GK):").toUpperCase();
+                let filtered = squad.filter(p => p[2] === pos);
+                console.log(`=> KẾT QUẢ LỌC VỊ TRÍ ${pos}:`);
+                filtered.forEach(p => console.log(`- ${p[0]} (${p[1]} bàn)`));
+                break;
+
+            case "4": 
+                let total = squad.reduce((sum, p) => sum + p[1], 0);
+                console.log(`=> Tổng số bàn thắng toàn đội: ${total} bàn`);
+                break;
+
+            case "5": 
+                let hasZero = squad.some(p => p[1] === 0);
+                let allScored = squad.every(p => p[1] > 0);
+                
+                if (hasZero) console.log("=> Có cầu thủ chưa ghi bàn (0 bàn).");
+                if (allScored) console.log("=> Tất cả cầu thủ đều đã ghi bàn.");
+                break;
+
+            case "0":
+                console.log("Hẹn gặp lại!");
+                break;
+
+            case null: 
+                choice = "0"; 
+                break;
+
+            default:
+                alert("Lựa chọn không hợp lệ!");
+                break;
+        }
+    } while (choice !== "0");
+</script>
+</body>
+</html>
