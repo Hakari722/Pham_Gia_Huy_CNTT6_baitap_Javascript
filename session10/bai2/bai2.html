@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    const player = {
+        name: "De Bruyne",
+        position: "Midfielder",
+        goals: 8,
+        assists: 25,
+        matchesPlayed: 35,
+    };
+    function showPlayerInfo(playerObj) {
+        console.log("--- THÔNG TIN BAN ĐẦU ---");
+        console.log("name:", playerObj.name);
+        console.log("position:", playerObj.position);
+        console.log("assists:", playerObj.assists);
+        console.log("matchesPlayed:", playerObj.matchesPlayed); 
+        let totalContribution = playerObj.goals + playerObj.assists;
+        console.log("Tổng đóng góp (G+A):", totalContribution);
+    }
+    function addPerformanceScore(playerObj) {
+        let score = (playerObj.goals + playerObj.assists) / playerObj.matchesPlayed;
+        playerObj.performancePerMatch = parseFloat(score.toFixed(2));
+        playerObj.isKeyPlayer = playerObj.performancePerMatch >= 1.0;
+        console.log(playerObj);
+    }
+    showPlayerInfo(player);      
+    addPerformanceScore(player); 
+</script>
+</body>
+</html>

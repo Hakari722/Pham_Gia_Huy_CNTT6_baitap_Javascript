@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let products = [
+    { name: "iPhone 15", price: 1200, stock: 10 },
+    { name: "Samsung S23", price: 900, stock: 0 },
+    { name: "Xiaomi 13", price: 600, stock: 5 },
+    { name: "Nokia G22", price: 150, stock: 20 },
+    { name: "Oppo Renno", price: 450, stock: 8 }
+];
+
+let choice;
+
+do {
+    choice = prompt(`--- HỆ THỐNG QUẢN LÝ KHO HÀNG ---
+1. Lọc danh mục sản phẩm cao cấp (>500)
+2. Kiểm định trạng thái dữ liệu (Hết hàng/Giá sàn)
+3. Phân tích giá trị vốn hóa (Tổng tài sản)
+4. Triển khai chiến dịch chiết khấu (Giảm 10%)
+5. Truy vấn sản phẩm theo từ khóa
+6. Báo cáo tình trạng tồn kho
+0. Thoát chương trình
+
+Nhập lựa chọn của bạn (0-7):`);
+
+    switch (choice) {
+        case "1":
+            console.log("--- CHỨC NĂNG 1: SẢN PHẨM CAO CẤP ---");
+            const premiumProducts = products
+                .filter(p => p.price > 500)
+                .map(p => p.name);
+            console.log("Danh sách sản phẩm giá trên 500:", premiumProducts.join(", "));
+            break;
+
+        case "2":
+            console.log("--- CHỨC NĂNG 2: KIỂM ĐỊNH DỮ LIỆU ---");
+            const hasOutOfStock = products.some(p => p.stock === 0);
+            const isAllAbove100 = products.every(p => p.price > 100);
+            console.log("- Có sản phẩm nào hết hàng không?", hasOutOfStock ? "Có" : "Không");
+            console.log("- Toàn bộ sản phẩm có giá trên 100?", isAllAbove100 ? "Đúng" : "Sai");
+            break;
+
+        case "3":
+            console.log("--- CHỨC NĂNG 3: PHÂN TÍCH VỐN HÓA ---");
+            const totalCapitalization = products.reduce((total, p) => {
+                return total + (p.price * p.stock);
+            }, 0);
+            console.log(`Tổng giá trị tài sản hiện có trong kho: ${totalCapitalization}`);
+            break;
+
+        case "4":
+            console.log("--- CHỨC NĂNG 4: CHIẾN DỊCH CHIẾT KHẤU ---");
+            products.forEach(p => {
+                p.price = p.price * 0.9;
+            });
+            console.log("Đã áp dụng giảm giá 10% đồng loạt cho tất cả sản phẩm.");
+            console.table(products);
+            break;
+
+        case "5":
+            console.log("--- CHỨC NĂNG 5: TRUY VẤN TỪ KHÓA ---");
+            let keyword = prompt("Nhập từ khóa sản phẩm cần tìm:").toLowerCase();
+            const searchResults = products.filter(p => 
+                p.name.toLowerCase().includes(keyword)
+            );
+            
+            if (searchResults.length > 0) {
+                console.log(`Kết quả tìm kiếm cho "${keyword}":`);
+                searchResults.forEach(p => {
+                    console.log(`- ${p.name} | Giá: ${p.price.toFixed(2)} | Số lượng: ${p.stock}`);
+                });
+            } else {
+                console.log("=> Không tìm thấy sản phẩm phù hợp.");
+            }
+            break;
+
+        case "6":
+            console.log("--- CHỨC NĂNG 6: BÁO CÁO TỒN KHO ---");
+            const stockReport = products.map(p => ({
+                name: p.name,
+                status: p.stock > 0 ? "Còn hàng" : "Hết hàng"
+            }));
+            
+            stockReport.forEach(item => {
+                console.log(`${item.name} -> [${item.status}]`);
+            });
+            break;
+
+        case "0":
+            alert("Đã thoát ứng dụng. Hẹn gặp lại!");
+            break;
+
+        default:
+            if (choice !== null) alert("Lựa chọn không hợp lệ, vui lòng nhập lại!");
+            break;
+    }
+} while (choice !== "0" && choice !== null);
+    </script>
+</body>
+</html>

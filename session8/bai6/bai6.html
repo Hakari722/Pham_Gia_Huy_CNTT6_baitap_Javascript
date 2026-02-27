@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    const players = [
+    "Messi - Forward - 25 - 15 - 34",
+    "Ronaldo - Forward - 30 - 10 - 38",
+    "Neymar - Forward - 18 - 20 - 32",
+    "De Bruyne - Midfielder - 8 - 25 - 35",
+    "Kante - Midfielder - 2 - 5 - 36",
+    "Van Dijk - Defender - 5 - 3 - 33",
+    "Alisson - Goalkeeper - 0 - 1 - 37"
+];
+
+function reportByPosition(playersList) {
+    const playerObjects = playersList.map(p => {
+        const parts = p.split(" - ");
+        return {
+            position: parts[1],
+            goals: parseInt(parts[2]),
+            assists: parseInt(parts[3]),
+            matches: parseInt(parts[4])
+        };
+    });
+    const positions = ['Forward', 'Midfielder', 'Defender', 'Goalkeeper'];
+    console.log("BÁO CÁO HIỆU SUẤT THEO VỊ TRÍ");
+    positions.forEach(pos => {
+        const group = playerObjects.filter(p => p.position === pos);
+        if (group.length > 0) {
+            const stats = group.reduce((acc, p) => {
+                acc.totalGoals += p.goals;
+                acc.totalAssists += p.assists;
+                acc.totalMatches += p.matches;
+                return acc;
+            }, { totalGoals: 0, totalAssists: 0, totalMatches: 0 });
+            const avgEfficiency = ((stats.totalGoals + stats.totalAssists) / stats.totalMatches).toFixed(2);
+            console.log(`\n${pos}:`);
+            console.log(`- Số cầu thủ: ${group.length}`);
+            console.log(`- Tổng bàn thắng: ${stats.totalGoals}`);
+            console.log(`- Tổng kiến tạo: ${stats.totalAssists}`);
+            console.log(`- Tổng số trận: ${stats.totalMatches}`);
+            console.log(`- Trung bình hiệu suất/trận: ${avgEfficiency}`);
+        }
+    });
+    const totalTeamGoals = playerObjects.reduce((sum, p) => sum + p.goals, 0);
+    console.log("\n-------------------------");
+    console.log(`Tổng bàn thắng toàn đội: ${totalTeamGoals}`);
+}
+reportByPosition(players);
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function generatePlayerSeasonReport(playerName, teamHistory) {
+    const player = teamHistory.find(p => p.name === playerName);
+    if (!player) {
+        return `Không tìm thấy cầu thủ [${playerName}]`;
+    }
+    let totalMatches = 0;
+    let totalGoals = 0;
+    let totalAssists = 0;
+    let totalYellowCards = 0;
+    let bestSeasonName = null;
+    let bestSeasonData = null;
+    const seasons = Object.keys(player.seasons);
+    seasons.forEach(seasonName => {
+        const currentSeason = player.seasons[seasonName];
+        totalMatches += currentSeason.matches;
+        totalGoals += currentSeason.goals;
+        totalAssists += currentSeason.assists;
+        totalYellowCards += currentSeason.yellowCards;
+        if (!bestSeasonData || 
+            currentSeason.goals > bestSeasonData.goals || 
+            (currentSeason.goals === bestSeasonData.goals && currentSeason.assists > bestSeasonData.assists)) {
+            
+            bestSeasonName = seasonName;
+            bestSeasonData = currentSeason;
+        }
+    });
+    return {
+        name: player.name,
+        position: player.position,
+        nationality: player.nationality,
+        careerStats: {
+            totalMatches: totalMatches,
+            totalGoals: totalGoals,
+            totalAssists: totalAssists,
+            totalYellowCards: totalYellowCards,
+            averageGoalsPerMatch: parseFloat((totalGoals / totalMatches).toFixed(2)),
+            averageAssistsPerMatch: parseFloat((totalAssists / totalMatches).toFixed(2)),
+            bestSeason: {
+                season: bestSeasonName,
+                goals: bestSeasonData.goals,
+                assists: bestSeasonData.assists
+            }
+        }
+    };
+}
+    </script>
+</body>
+</html>

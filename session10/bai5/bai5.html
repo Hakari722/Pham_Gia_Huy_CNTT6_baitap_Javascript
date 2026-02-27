@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function generatePlayerSeasonReport(playerName, teamHistory) {
+    const player = teamHistory.find(p => p.name === playerName);
+    if (!player) {
+        return `Không tìm thấy cầu thủ [${playerName}]`;
+    }
+    let totalMatches = 0;
+    let totalGoals = 0;
+    let totalAssists = 0;
+    let totalYellowCards = 0;
+    let bestSeasonKey = null;
+    let maxGoals = -1;
+    let maxAssists = -1;
+    const seasonsKeys = Object.keys(player.seasons);
+    seasonsKeys.forEach(sKey => {
+        const sData = player.seasons[sKey];
+        totalMatches += sData.matches;
+        totalGoals += sData.goals;
+        totalAssists += sData.assists;
+        totalYellowCards += sData.yellowCards;
+        if (sData.goals > maxGoals) {
+            maxGoals = sData.goals;
+            maxAssists = sData.assists;
+            bestSeasonKey = sKey;
+        } else if (sData.goals === maxGoals) {
+            if (sData.assists > maxAssists) {
+                maxAssists = sData.assists;
+                bestSeasonKey = sKey;
+            }
+        }
+    });
+    const report = {
+        name: player.name,
+        position: player.position,
+        nationality: player.nationality,
+        careerStats: {
+            totalMatches: totalMatches,
+            totalGoals: totalGoals,
+            totalAssists: totalAssists,
+            totalYellowCards: totalYellowCards,
+            averageGoalsPerMatch: parseFloat((totalGoals / totalMatches).toFixed(2)),
+            averageAssistsPerMatch: parseFloat((totalAssists / totalMatches).toFixed(2)),
+            bestSeason: {
+                season: bestSeasonKey,
+                goals: player.seasons[bestSeasonKey].goals,
+                assists: player.seasons[bestSeasonKey].assists
+            }
+        }
+    };
+    return report;
+}
+    </script>
+</body>
+</html>

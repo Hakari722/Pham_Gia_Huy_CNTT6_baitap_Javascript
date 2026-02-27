@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // Mảng dữ liệu gốc
+    let studentList = [
+        { id: 1, name: "Nguyen Van A", age: 20, gpa: 8.5, status: "active" },
+        { id: 2, name: "Tran Thi B", age: 17, gpa: 3.9, status: "active" },
+        { id: 3, name: "Le Van C", age: 19, gpa: 8.0, status: "inactive" }
+    ];
+
+    // 1. Create Student: Thêm sinh viên mới
+    function createStudent(id, name, age, gpa, status) {
+        const newStudent = { id, name, age, gpa, status };
+        studentList.push(newStudent);
+        console.log(`=> Đã thêm sinh viên: ${name}`);
+    }
+
+    // 2. Read All Students: Xuất danh sách dạng bảng
+    function readAllStudents() {
+        console.log("--- DANH SÁCH SINH VIÊN TỔNG ---");
+        console.table(studentList); // Sử dụng console.table để hiển thị chuyên nghiệp
+    }
+
+    // 3. Filter Scholarship Candidates: GPA > 8.0
+    function filterScholarship() {
+        const candidates = studentList.filter(s => s.gpa > 8.0);
+        console.log("--- SINH VIÊN NHẬN HỌC BỔNG ---");
+        console.table(candidates);
+        return candidates;
+    }
+
+    // 4. Update Student Profile: Cập nhật theo ID
+    function updateStudent(id, newName, newGpa) {
+        const student = studentList.find(s => s.id === id);
+        if (student) {
+            student.name = newName;
+            student.gpa = newGpa;
+            console.log(`=> Đã cập nhật sinh viên ID ${id}`);
+        } else {
+            console.log("=> Không tìm thấy ID!");
+        }
+    }
+
+    // 5. Delete Record: Xóa hoàn toàn khỏi mảng gốc
+    function deleteStudent(id) {
+        const index = studentList.findIndex(s => s.id === id);
+        if (index !== -1) {
+            studentList.splice(index, 1);
+            console.log(`=> Đã xóa sinh viên ID ${id}`);
+        }
+    }
+
+    // 6. Compliance Verification: Kiểm tra điều kiện (some, every)
+    function verifyCompliance() {
+        // Kiểm tra xem có ai dưới 18 tuổi không
+        const hasUnder18 = studentList.some(s => s.age < 18);
+        console.log(hasUnder18 ? "Cảnh báo: Có sinh viên dưới 18 tuổi." : "Tất cả sinh viên đều từ 18 tuổi.");
+
+        // Kiểm tra tất cả có active không
+        const allActive = studentList.every(s => s.status === "active");
+        console.log(allActive ? "Trạng thái: Đồng nhất (Active)." : "Trạng thái: Không đồng nhất.");
+    }
+
+    // 7. Academic Statistics: Trung bình GPA (reduce)
+    function calculateAverageGpa() {
+        const totalGpa = studentList.reduce((sum, s) => sum + s.gpa, 0);
+        const avg = totalGpa / studentList.length;
+        console.log(`=> Điểm GPA trung bình toàn lớp: ${avg.toFixed(2)}`);
+        return avg;
+    }
+
+    // 8. Data Normalization: Chuẩn hóa tên IN HOA (map)
+    function normalizeNames() {
+        const normalizedList = studentList.map(s => ({
+            ...s, // Sao chép các thuộc tính cũ
+            name: s.name.toUpperCase() // Ghi đè thuộc tính name
+        }));
+        console.log("--- DANH SÁCH ĐÃ CHUẨN HÓA TÊN ---");
+        console.table(normalizedList);
+    }
+
+    // --- CHẠY THỬ CHƯƠNG TRÌNH ---
+    readAllStudents();
+    verifyCompliance();
+    calculateAverageGpa();
+    normalizeNames();
+</script>
+</body>
+</html>
