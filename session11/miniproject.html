@@ -21,12 +21,7 @@
         console.log("--- DANH SÁCH SINH VIÊN TỔNG ---");
         console.table(studentList); 
     }
-    function filterScholarship() {
-        const candidates = studentList.filter(s => s.gpa > 8.0);
-        console.log("--- SINH VIÊN NHẬN HỌC BỔNG ---");
-        console.table(candidates);
-        return candidates;
-    }
+    
     function updateStudent(id, newName, newGpa) {
         const student = studentList.find(s => s.id === id);
         if (student) {
