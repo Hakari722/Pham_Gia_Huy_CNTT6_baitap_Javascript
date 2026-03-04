@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const students = [
+            {
+                id:1,
+                name: "Gia Huy",
+                age: 19,
+                gpa:8.0,
+                status: "active",
+                createdAt: null,
+                updatedAt: null,
+                deleteAt: null
+            },
+            {
+                id:2,
+                name: "Duc Anh",
+                age: 20,
+                gpa:4.0,
+                status: "inactive",
+                createdAt: null,
+                updatedAt: null,
+                deleteAt: null
+            },
+            {
+                id:3,
+                name: "Vũ Dũng",
+                age: 36,
+                gpa:7.2,
+                status: "active",
+                createdAt: null,
+                updatedAt: null,
+                deleteAt: null
+            },
+            {
+                id:4,
+                name: "Quốc Trung",
+                age: 29,
+                gpa:6.5,
+                status: "active",
+                createdAt: null,
+                updatedAt: null,
+                deleteAt: null
+            },
+            {
+                id:5,
+                name: "Ngọc Thái",
+                age: 18,
+                gpa:5.0,
+                status: "inactive",
+                createdAt: null,
+                updatedAt: null,
+                deleteAt: null
+            },
+            {
+                id:6,
+                name: "Duy Anh",
+                age: 25,
+                gpa:7.5,
+                status: "active",
+                createdAt: null,
+                updatedAt: null,
+                deleteAt: null
+            }
+        ];
+        let choice;
+        do{
+            choice = +prompt(`==== STUDENT MANAGER ADVANCED ====
+            1.Create Student
+            2.Update Student
+            3.Soft Delete Student
+            4.Restore Student
+            5.View Students
+            6.Analytics Dashboard
+            7.Exit
+            `);
+            switch(choice){
+                case 1:
+                    createStudent(students);
+                    break;
+                case 2:
+                    updateStudent(students);
+                    break;
+                case 3:
+                    deleteStudent(students);
+                    break;
+                case 4:
+                    restoreStudent(students);
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                default:
+            }
+        }while(choice !== 7);
+    function createStudent(students){
+    let id = +prompt("Nhập id");
+    let name = prompt("Nhập tên sinh viên ");
+    let age = +prompt("Nhập tuổi sinh viên");
+    let gpa = +prompt("Nhập GPA sinh viên");
+
+    let statusChoice = +prompt(`Chọn trạng thái sinh viên:
+        1.active
+        2.inactive
+    `);
+
+    let status;
+    if (statusChoice === 1) {
+        status = "active";
+    } else if (statusChoice === 2) {
+        status = "inactive";
+    }else {
+        alert("Trạng thái không hợp lệ, mặc định là inactive");
+        status = "inactive";
+    }
+           let newStudent ={
+            id,
+            name,
+            age,
+            gpa,
+            status,
+            createdAt: new Date(),
+            updatedAt: null,
+            deleteAt: null
+           }
+           students.unshift(newStudent);
+           console.log(students),
+           alert("Đã thêm thành công");
+    }
+    function updateStudent(students){
+        let id = +prompt("Nhập id bạn muốn sửa");
+        let studentIndex = students.findIndex((students) =>students.id === id);
+        if(studentIndex === -1){
+            console.log("không tìm thấy id nhập vào")
+        }else{
+            let newName = prompt("Nhập tên mới");
+            let newAge = +prompt("Nhập tuổi mới");
+            let newGpa = +prompt("Nhập GPA mới");
+            let newStatus = prompt("nhập trạng thái mới");
+            let confirm = window.confirm("bạn có muốn cập nhật không?");
+            if(confirm === true){
+                students[studentIndex] = {
+                    id: id,
+                    name: newName,
+                    age:newAge,
+                    gpa:newGpa,
+                    status: newStatus,
+                    createdAt:students[studentIndex].createdAt,
+                    updatedAt:new Date(),
+                    deleteAt:students[studentIndex].deleteAt,
+                };
+                alert("đã cập nhật thành công");
+                console.table(students);
+            }
+        }
+    }
+    function deleteStudent(students){
+        let id = +prompt("Nhập id bạn muốn cập nhật");
+        let studentIndex = students.findIndex((students) => students.id === id);
+        if(studentIndex === -1){
+            console.log("Không tìm thấy id vừa nhập");
+        }else{
+            let confirm = window.confirm("Bạn có muốn xóa không?");
+            if(confirm == true){
+                students[studentIndex] = {
+                    id: students[studentIndex].id,
+                    name: students[studentIndex].name,
+                    age: students[studentIndex].age,
+                    status:"inactive",
+                    createdAt:students[studentIndex].createdAt,
+                    updatedAt:students[studentIndex].updatedAt,
+                    deleteAt:new Date(),
+
+                };
+                alert("Đã xóa thành công!");
+                console.log(students);
+            }
+        }
+    }
+    function restoreStudent(students){
+        let id = +prompt("Nhập ID cần khôi phục");
+
+        let index = students.findIndex(
+            student => student.id === id
+        );
+
+        if(index === -1){
+            alert("Không tìm thấy ID");
+            return;
+        }
+
+        students[index].status = "active";
+        students[index].deleteAt = null;   
+        students[index].updatedAt = new Date();
+
+        alert("Khôi phục thành công!");
+        console.table(students);
+    }
+
+    </script>
+</body>
+</html>
