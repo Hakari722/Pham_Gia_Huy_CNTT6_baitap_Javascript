@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Công Việc - Todo List</title>
+    <link rel="stylesheet" href="todo-list.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <h1>📝 Quản Lý Công Việc</h1>
+        <div class="input-group">
+          <input
+            type="text"
+            id="taskInput"
+            placeholder="Nhập công việc mới..."
+            autocomplete="off"
+          />
+          <button id="addBtn" class="btn-add">Thêm</button>
+        </div>
+      </header>
+
+      <!-- Body - Task List -->
+      <main class="task-list" id="taskList">
+        <!-- Tasks will be dynamically added here -->
+        <div class="empty-state">
+          <div class="empty-state-icon">📋</div>
+          <div class="empty-state-text">
+            Chưa có công việc nào. Hãy thêm công việc mới!
+          </div>
+        </div>
+
+        <div class="task-item" data-id="2">
+          <input type="checkbox" class="task-checkbox" /><span class="task-text"
+            >Quét nhà</span
+          >
+          <div class="task-actions">
+            <button class="btn-edit">✏️ Sửa</button
+            ><button class="btn-delete">🗑️ Xóa</button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="task-counter">
+          <span id="completedCount">0</span> /
+          <span id="totalCount">0</span> công việc hoàn thành
+        </div>
+      </footer>
+      <script>
+        const taskInput = document.getElementById("taskInput");
+        const addBtn = document.getElementById("addBtn");
+        const taskList = document.getElementById("taskList");
+        const completedCount = document.getElementById("completedCount");
+        const totalCount = document.getElementById("totalCount");
+        let tasks = [];
+        let idCounter = 1;
+        addBtn.addEventListener("click", addTask);
+        taskInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") addTask();
+        });
+
+        function addTask() {
+          const text = taskInput.value.trim();
+
+          if (text === "") {
+            alert("Không được để trống công việc");
+            return;
+          }
+
+        const task = {
+          id: idCounter++,
+          text: text,
+          completed: false,
+        };
+
+        tasks.push(task);
+
+        taskInput.value = "";
+        taskInput.focus();
+
+        renderTasks();
+      }
+function renderTasks() {
+  taskList.innerHTML = "";
+
+  if (tasks.length === 0) {
+    taskList.innerHTML = `
+    <div class="empty-state">
+      <div class="empty-state-icon"></div>
+      <div class="empty-state-text">
+        Chưa có công việc nào. Hãy thêm công việc mới!
+      </div>
+    </div>`;
+  }
+
+  tasks.forEach((task) => {
+    const div = document.createElement("div");
+    div.className = "task-item";
+    div.dataset.id = task.id;
+    div.innerHTML = `
+      <input type="checkbox" class="task-checkbox" ${
+        task.completed ? "checked" : ""
+      }>
+      <span class="task-text ${task.completed ? "completed" : ""}">
+        ${task.text}
+      </span>
+      <div class="task-actions">
+        <button class="btn-edit"> Sửa</button>
+        <button class="btn-delete"> Xóa</button>
+      </div>
+    `;
+
+    const checkbox = div.querySelector(".task-checkbox");
+    const deleteBtn = div.querySelector(".btn-delete");
+    const editBtn = div.querySelector(".btn-edit");
+
+    checkbox.addEventListener("change", () => toggleTask(task.id));
+    deleteBtn.addEventListener("click", () => deleteTask(task.id));
+    editBtn.addEventListener("click", () => editTask(task.id));
+
+    taskList.appendChild(div);
+  });
+
+  updateFooter();
+}
+function toggleTask(id) {
+  const task = tasks.find((t) => t.id === id);
+
+  task.completed = !task.completed;
+
+  renderTasks();
+}
+function editTask(id) {
+  const taskDiv = document.querySelector(`[data-id="${id}"]`);
+  const task = tasks.find((t) => t.id === id);
+  taskDiv.innerHTML = `
+    <input class="edit-input" value="${task.text}">
+    <button class="save-btn">Lưu</button>
+    <button class="cancel-btn">Hủy</button>
+  `;
+
+  const input = taskDiv.querySelector(".edit-input");
+  const saveBtn = taskDiv.querySelector(".save-btn");
+  const cancelBtn = taskDiv.querySelector(".cancel-btn");
+  input.focus();
+  saveBtn.addEventListener("click", saveEdit);
+  cancelBtn.addEventListener("click", renderTasks);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") saveEdit();
+    if (e.key === "Escape") renderTasks();
+  });
+  function saveEdit() {
+    const newText = input.value.trim();
+    if (newText === "") {
+      alert("Tên công việc không được rỗng");
+      return;
+    }
+
+    task.text = newText;
+
+    renderTasks();
+  }
+}
+function deleteTask(id) {
+  const confirmDelete = confirm("Bạn có chắc muốn xóa công việc này?");
+
+  if (!confirmDelete) return;
+
+  tasks = tasks.filter((t) => t.id !== id);
+
+  renderTasks();
+}
+function updateFooter() {
+  const total = tasks.length;
+  const completed = tasks.filter((t) => t.completed).length;
+  totalCount.textContent = total;
+  completedCount.textContent = completed;
+  const footer = document.querySelector(".footer");
+  const oldBadge = document.querySelector(".done-badge");
+  if (oldBadge) oldBadge.remove();
+  if (total > 0 && completed === total) {
+    const badge = document.createElement("div");
+    badge.className = "done-badge";
+    badge.innerHTML = " Hoàn thành tất cả";
+
+    footer.appendChild(badge);
+  }
+}
+      </script>
+    </div>
+  </body>
+</html>
