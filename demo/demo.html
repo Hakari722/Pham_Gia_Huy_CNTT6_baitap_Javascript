@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Danh Sach San Phẩm Cho Tet</h1>
+    <ul id="product-list">
+        <div class = "product"> 
+            <p></p>
+            <p></p>
+        </div>
+    </ul>
+    <form id="product-form">
+        <input type="text" id="product-name" placeholder="Tên sản phẩm">
+        <input type="number" id="product-price" placeholder="Giá (VND)">
+        <button type="submit" onclick="addProducts(event)">Thêm Sản Phẩm</button>
+    </form>
+
+<script>
+    const products = [
+    { id: 1, name: "Bánh Chưng", price: 150000 },
+    { id: 2, name: "Giò Lua", price: 180000 },
+    { id: 3, name: "Canh Đào", price: 500000 },
+    { id: 4, name: "Mứt Tet", price: 120000 },
+    { id: 5, name: "Bao Li Xi", price: 25000 },
+    { id: 6, name: "Dưa Hấu Tết", price: 80000 },
+
+    ];
+
+    let productsList = document.getElementById("product-list");
+    function renderProducts() {
+        products.forEach ((product) => {
+            productsList.innerHTML += `
+                <div class = "product"> 
+                    <p>Tên sản phẩm: ${product.name}</p>
+                    <p>Giá tiền: ${product.price}</p>
+
+                    <button class = "delete-btn"  onclick="deleteProduct(this)"> Xóa </button>
+                </div>
+            `;
+        });
+    }
+    renderProducts();
+
+    function addProducts(event) {
+        event.preventDefault();
+        let name = document.getElementById("product-name").value;
+        let price = document.getElementById("product-price").value;
+        let newId = products.length === 0 ?1 :products[products.length - 1].id + 1;
+
+        let newProduct = {
+            id: newId,
+            name: name,
+            price: price
+        };
+        products.push(newProduct);
+        productsList.innerHTML += `<div class = "product"> 
+                    <p>Tên sản phẩm: ${newProduct.name}</p>
+                    <p>Giá tiền: ${newProduct.price}</p>
+                </div>`;
+    }
+
+    function deleteProduct(button){
+    const confirmDelete = confirm("Bạn có chắc muốn xóa sản phẩm này?");
+    if(confirmDelete){
+        button.parentElement.remove();
+    }
+
+}
+localStorage.setItem(`products` ,JSON.stringify(products))
+productsForm.reset()
+</script>
+</body>
+</html>
